@@ -1,6 +1,7 @@
 import sys
 import json
 
+
 def ipv4_to_value(ipv4_addr) -> int:
     """
     Convert a dots-and-numbers IP address to a single 32-bit numeric
@@ -29,7 +30,10 @@ def ipv4_to_value(ipv4_addr) -> int:
 def value_to_ipv4(addr) -> str:
     """
     Convert a single 32-bit numeric value of integer type to a
-    dots-and-numbers IP address. Returns a string type.
+    dots-and-numbers IP address.
+
+    :return: a string type.
+    :rtype: str
 
     Example:
 
@@ -41,9 +45,19 @@ def value_to_ipv4(addr) -> str:
     addr:   0x01020304 0b00000001000000100000001100000100 16909060
     return: "1.2.3.4"
     """
+    digits = []
+    number_base = 256
+    ip_address_portions = 4
 
-    # TODO -- write me!
-    pass
+    for i in range(ip_address_portions):
+        digit = (addr // number_base ** i) % number_base
+        addr = addr - digit
+        digits.append(digit)
+
+    val = str(digits[3]) + '.' + str(digits[2]) + '.' + str(digits[1]) + '.' + str(digits[0])
+
+    return val
+
 
 def get_subnet_mask_value(slash):
     """
@@ -66,6 +80,7 @@ def get_subnet_mask_value(slash):
 
     # TODO -- write me!
     pass
+
 
 def ips_same_subnet(ip1, ip2, slash):
     """
@@ -97,6 +112,7 @@ def ips_same_subnet(ip1, ip2, slash):
     # TODO -- write me!
     pass
 
+
 def get_network(ip_value, netmask):
     """
     Return the network portion of an address value as integer type.
@@ -110,6 +126,7 @@ def get_network(ip_value, netmask):
 
     # TODO -- write me!
     pass
+
 
 def find_router_for_ip(routers, ip):
     """
@@ -153,6 +170,7 @@ def find_router_for_ip(routers, ip):
     # TODO -- write me!
     pass
 
+
 # Uncomment this code to have it run instead of the real main.
 # Be sure to comment it back out before you submit!
 """
@@ -166,6 +184,7 @@ def my_tests():
     # Add custom test code here
 """
 
+
 ## -------------------------------------------
 ## Do not modify below this line
 ##
@@ -175,11 +194,13 @@ def my_tests():
 def usage():
     print("usage: netfuncs.py infile.json", file=sys.stderr)
 
+
 def read_routers(file_name):
     with open(file_name) as fp:
         json_data = fp.read()
-        
+
     return json.loads(json_data)
+
 
 def print_routers(routers):
     print("Routers:")
@@ -187,7 +208,6 @@ def print_routers(routers):
     routers_list = sorted(routers.keys())
 
     for router_ip in routers_list:
-
         # Get the netmask
         slash_mask = routers[router_ip]["netmask"]
         netmask_value = get_subnet_mask_value(slash_mask)
@@ -199,7 +219,8 @@ def print_routers(routers):
         network_ip = value_to_ipv4(network_value)
 
         print(f" {router_ip:>15s}: netmask {netmask}: " \
-            f"network {network_ip}")
+              f"network {network_ip}")
+
 
 def print_same_subnets(src_dest_pairs):
     print("IP Pairs:")
@@ -214,6 +235,7 @@ def print_same_subnets(src_dest_pairs):
         else:
             print("different subnets")
 
+
 def print_ip_routers(routers, src_dest_pairs):
     print("Routers and corresponding IPs:")
 
@@ -223,7 +245,7 @@ def print_ip_routers(routers, src_dest_pairs):
 
     for ip in all_ips:
         router = str(find_router_for_ip(routers, ip))
-        
+
         if router not in router_host_map:
             router_host_map[router] = []
 
@@ -231,6 +253,7 @@ def print_ip_routers(routers, src_dest_pairs):
 
     for router_ip in sorted(router_host_map.keys()):
         print(f" {router_ip:>15s}: {router_host_map[router_ip]}")
+
 
 def main(argv):
     if "my_tests" in globals() and callable(my_tests):
@@ -254,6 +277,6 @@ def main(argv):
     print()
     print_ip_routers(routers, src_dest_pairs)
 
+
 if __name__ == "__main__":
     sys.exit(main(sys.argv))
-    
