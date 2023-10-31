@@ -17,17 +17,14 @@ def ipv4_to_value(ipv4_addr) -> int:
     """
 
     val: int = 0
+    number_base = 256
+    digits_reversed = ipv4_addr.split('.')[::-1]
 
-    bytes = ipv4_addr.split('.')
+    for i, b in enumerate(digits_reversed):
+        val += int(b) * (number_base ** i)
 
-    print(f'bytes[]: {bytes}')
+    return val
 
-    for i, b in enumerate(ipv4_addr.split('.')[::-1]):
-        print(f'Loop {i}: adding b:{b} + 256^{i} to {val}')
-        val += (int(b) * 256 ** i)
-        print(f'val\'s val: {val}')
-
-    return int(val)
 
 def value_to_ipv4(addr) -> str:
     """
