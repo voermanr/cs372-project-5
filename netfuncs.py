@@ -1,10 +1,11 @@
 import sys
 import json
 
-def ipv4_to_value(ipv4_addr):
+def ipv4_to_value(ipv4_addr) -> int:
     """
     Convert a dots-and-numbers IP address to a single 32-bit numeric
-    value of integer type. Returns an integer type.
+    value of integer type.
+    :return: an integer type.
 
     Example:
 
@@ -15,10 +16,20 @@ def ipv4_to_value(ipv4_addr):
     return:    16909060  (Which is 0x01020304 hex)
     """
 
-    # TODO -- write me!
-    pass
+    val: int = 0
 
-def value_to_ipv4(addr):
+    bytes = ipv4_addr.split('.')
+
+    print(f'bytes[]: {bytes}')
+
+    for i, b in enumerate(ipv4_addr.split('.')[::-1]):
+        print(f'Loop {i}: adding b:{b} + 256^{i} to {val}')
+        val += (int(b) * 256 ** i)
+        print(f'val\'s val: {val}')
+
+    return int(val)
+
+def value_to_ipv4(addr) -> str:
     """
     Convert a single 32-bit numeric value of integer type to a
     dots-and-numbers IP address. Returns a string type.
