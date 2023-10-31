@@ -135,7 +135,6 @@ def get_network(ip_value, netmask):
     return ip_value & netmask
 
 
-
 def find_router_for_ip(routers, ip):
     """
     Search a dictionary of routers (keyed by router IP) to find which
@@ -175,8 +174,11 @@ def find_router_for_ip(routers, ip):
     return: None
     """
 
-    # TODO -- write me!
-    pass
+    for router, attributes in routers.items():
+        netmask = attributes['netmask']
+
+        if ips_same_subnet(ip1=ip, ip2=router, slash=netmask):
+            return router
 
 
 # Uncomment this code to have it run instead of the real main.
