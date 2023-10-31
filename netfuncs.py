@@ -122,6 +122,8 @@ def ips_same_subnet(ip1, ip2, slash):
 def get_network(ip_value, netmask):
     """
     Return the network portion of an address value as integer type.
+    :return: the network portion of an address
+    :rtype: int
 
     Example:
 
@@ -130,8 +132,8 @@ def get_network(ip_value, netmask):
     return:   0x01020300
     """
 
-    # TODO -- write me!
-    pass
+    return ip_value & netmask
+
 
 
 def find_router_for_ip(routers, ip):
