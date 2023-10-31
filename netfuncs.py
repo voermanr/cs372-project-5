@@ -59,12 +59,13 @@ def value_to_ipv4(addr) -> str:
     return val
 
 
-def get_subnet_mask_value(slash):
+def get_subnet_mask_value(slash) -> int:
     """
     Given a subnet mask in slash notation, return the value of the mask
     as a single number of integer type. The input can contain an IP
     address optionally, but that part should be discarded.
-
+    :return: the mask value
+    :rtype: int
     Returns an integer type.
 
     Example:
@@ -77,9 +78,15 @@ def get_subnet_mask_value(slash):
     slash:  "10.20.30.40/23"
     return: 0xfffffe00 0b11111111111111111111111000000000 4294966784
     """
+    mask_val = 0
 
-    # TODO -- write me!
-    pass
+    mask = int(slash.split('/')[1])
+    mask_bits = 32 - mask
+
+    for i in range(mask_bits, 32):
+        mask_val += 2 ** i
+
+    return mask_val
 
 
 def ips_same_subnet(ip1, ip2, slash):
