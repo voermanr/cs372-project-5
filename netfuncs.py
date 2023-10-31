@@ -116,8 +116,7 @@ def ips_same_subnet(ip1, ip2, slash):
     return: False
     """
 
-    # TODO -- write me!
-    pass
+    return ipv4_to_value(ip2) & get_subnet_mask_value(slash) == ipv4_to_value(ip1) & get_subnet_mask_value(slash)
 
 
 def get_network(ip_value, netmask):
