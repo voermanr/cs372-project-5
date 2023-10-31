@@ -31,14 +31,15 @@ class TestNetFunctions(unittest.TestCase):
             slash="/16"
         ))
 
-    def get_network(self):
-        self.assertEqual(nf.get_network(0x01020304, 0xffffff00), 0x01020300)
+    def test_get_network(self):
+        self.assertEqual(nf.get_network(0x01020305, 0xffffff00), 0x01020300)
 
-    def find_router_for_ip(self):
+    def test_find_router_for_ip(self):
         routers = json.loads('{ "1.2.3.1": { "netmask": "/24"},"1.2.4.1": {"netmask": "/24"}}')
 
         self.assertEqual(nf.find_router_for_ip(routers=routers, ip="1.2.3.5"), "1.2.3.1")
         self.assertEqual(nf.find_router_for_ip(routers=routers, ip="1.2.5.6"), None)
+
 
 if __name__ == '__main__':
     unittest.main()
