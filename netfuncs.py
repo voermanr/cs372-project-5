@@ -52,9 +52,9 @@ def value_to_ipv4(addr) -> str:
     for i in range(ip_address_portions):
         digit = (addr // number_base ** i) % number_base
         addr = addr - digit
-        digits.append(digit)
+        digits.append(str(digit))
 
-    val = str(digits[3]) + '.' + str(digits[2]) + '.' + str(digits[1]) + '.' + str(digits[0])
+    val = '.'.join(digits[::-1])
 
     return val
 
